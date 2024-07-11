@@ -1,35 +1,91 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+// import "./App.css";
+import "./styles/register.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    password2: "",
+  });
+
+  const { name, email, password, password2 } = user;
+
+  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (password !== password2) {
+      console.log("Passwords do not match");
+    } else {
+      register({
+        name,
+        email,
+        password,
+      });
+    }
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="form-container">
+        <h1>
+          Account <span className="text-primary">Register</span>
+        </h1>
+        {/* <form onSubmit={onSubmit}> */}
+        <form>
+          <div className="form-group">
+            <label htmlFor="name">Name</label>
+            <input
+              type="text"
+              name="name"
+              value={name}
+              onChange={onChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">Email Address</label>
+            <input
+              type="email"
+              name="email"
+              value={email}
+              onChange={onChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={onChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password2">Confirm Password</label>
+            <input
+              type="password"
+              name="password2"
+              value={password2}
+              onChange={onChange}
+              required
+            />
+          </div>
+          <input
+            type="submit"
+            value="Register"
+            className="btn btn-primary btn-block"
+          />
+        </form>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
